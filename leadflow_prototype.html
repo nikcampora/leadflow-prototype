@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFlow AI - Complete Business Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+            line-height: 1.5;
+        }
+        
+        /* Login Page */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+        
+        .login-left {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .login-right {
+            flex: 1;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.25rem;
+            color: #a0aec0;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2d3748;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            background: #3182ce;
+        }
+        
+        /* Main App Layout */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 260px;
+            background: #2d3748;
+            padding: 1.5rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar-logo {
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .sidebar-logo h1 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .nav-item:hover {
+            background: #4a5568;
+            color: white;
+        }
+        
+        .nav-item.active {
+            background: #4299e1;
+            color: white;
+            border-right: 3px solid #3182ce;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        /* Page Content */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: #718096;
+            font-size: 1.125rem;
+        }
+        
+        /* Stepper */
+        .stepper {
+            display: flex;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .step.active .step-number {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background: #38a169;
+            color: white;
+        }
+        
+        .step-label {
+            font-weight: 500;
+        }
+        
+        .step.active .step-label {
+            color: #4299e1;
+        }
+        
+        .step.completed .step-label {
+            color: #38a169;
+        }
+        
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Integration Cards */
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .integration-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .integration-card:hover {
+            border-color: #4299e1;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.15);
+        }
+        
+        .integration-card.selected {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+        
+        .integration-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .integration-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .apollo-icon {
+            background: #ff6b35;
+            color: white;
+        }
+        
+        .ampleleads-icon {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .linkedin-icon {
+            background: #0077b5;
+            color: white;
+        }
+        
+        /* Workflow Builder */
+        .workflow-canvas {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .workflow-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-node {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .workflow-node.active {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+        
+        .workflow-arrow {
+            font-size: 1.5rem;
+            color: #a0aec0;
+        }
+        
+        /* Results Table */
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table-filters {
+            padding: 1rem 1.5rem;
+            background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tag {
+            background: #4299e1;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .results-table th,
+        .results-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .results-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .score-bar {
+            width: 60px;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: #38a169;
+            transition: width 0.3s ease;
+        }
+        
+        .company-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: #4299e1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-verified {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-pending {
+            background: #fef5e7;
+            color: #c05621;
+        }
+        
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .text-gray-600 {
+            color: #718096;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .btn-success {
+            background: #38a169;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #2f855a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-left">
+            <div>
+                <div class="logo">🚀 LeadFlow AI</div>
+                <div class="tagline">Automated Lead Generation<br>Powered by AI & N8N</div>
+                <div style="color: #a0aec0; margin-top: 2rem;">
+                    • Connect Apollo.io, AmpleLeads & more<br>
+                    • AI-powered lead scoring<br>
+                    • Automated cold email campaigns<br>
+                    • Real-time data enrichment
+                </div>
+            </div>
+        </div>
+        <div class="login-right">
+            <div class="login-form">
+                <h2 style="margin-bottom: 2rem; font-size: 1.875rem; font-weight: 700;">Welcome Back</h2>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="your@company.com" value="demo@company.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="••••••••" value="password">
+                </div>
+                <button class="btn btn-primary" onclick="login()">Sign In</button>
+                <div class="text-center" style="margin-top: 1.5rem;">
+                    <a href="#" style="color: #4299e1; text-decoration: none;">Don't have an account? Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appContainer" class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <h1>LeadFlow AI</h1>
+            </div>
+            <nav>
+                <div class="nav-item active" data-page="setup">
+                    ⚙️ Setup Workflow
+                </div>
+                <div class="nav-item" data-page="integrations">
+                    🔌 Integrations
+                </div>
+                <div class="nav-item" data-page="workflow">
+                    🔄 Workflow Builder
+                </div>
+                <div class="nav-item" data-page="results">
+                    📊 Results
+                </div>
+                <div class="nav-item" data-page="campaigns">
+                    📧 Email Campaigns
+                </div>
+            </nav>
+        </div>
+        
+        <div class="main-content">
+            <!-- Setup Page -->
+            <div id="setupPage" class="page active">
+                <div class="stepper">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Connect Sources</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Configure Workflow</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Run & Results</div>
+                    </div>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Setup Your Lead Generation Workflow</h1>
+                    <p class="page-subtitle">Connect your data sources and configure automation</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Company Information</h3>
+                        <p class="text-gray-600">Tell us about your business to optimize lead targeting</p>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label">Company Website</label>
+                                <input type="url" class="form-input" placeholder="https://yourcompany.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Industry</label>
+                                <select class="form-input">
+                                    <option>SaaS</option>
+                                    <option>E-commerce</option>
+                                    <option>Fintech</option>
+                                    <option>Healthcare</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Target Customer Profile</label>
+                            <textarea class="form-input" rows="3" placeholder="Describe your ideal customer (company size, role, pain points, etc.)"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="goToIntegrations()">Continue to Integrations</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integrations Page -->
+            <div id="integrationsPage" class="page">
+                <div class="stepper">
+                    <div class="step completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-label">Connect Sources</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Configure Workflow</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Run & Results</div>
+                    </div>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Connect Your Data Sources</h1>
+                    <p class="page-subtitle">Select the tools you want to use for lead generation</p>
+                </div>
+                
+                <div class="integration-grid">
+                    <div class="integration-card" onclick="selectIntegration(this)">
+                        <div class="integration-header">
+                            <div class="integration-icon apollo-icon">A</div>
+                            <div>
+                                <h3>Apollo.io</h3>
+                                <p class="text-gray-600">250M+ contacts database</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">Search and export leads from the largest B2B database</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary">Connect Apollo</button>
+                        </div>
+                    </div>
+                    
+                    <div class="integration-card" onclick="selectIntegration(this)">
+                        <div class="integration-header">
+                            <div class="integration-icon ampleleads-icon">AL</div>
+                            <div>
+                                <h3>AmpleLeads</h3>
+                                <p class="text-gray-600">Real-time data enrichment</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">Enrich leads with verified emails, phone numbers and company data</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary">Connect AmpleLeads</button>
+                        </div>
+                    </div>
+                    
+                    <div class="integration-card" onclick="selectIntegration(this)">
+                        <div class="integration-header">
+                            <div class="integration-icon linkedin-icon">in</div>
+                            <div>
+                                <h3>LinkedIn Sales Navigator</h3>
+                                <p class="text-gray-600">Advanced lead search</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">Use Sales Navigator filters for precise targeting</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary">Connect LinkedIn</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="goToWorkflow()">Configure Workflow</button>
+                </div>
+            </div>
+            
+            <!-- Workflow Page -->
+            <div id="workflowPage" class="page">
+                <div class="stepper">
+                    <div class="step completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-label">Connect Sources</div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-label">Configure Workflow</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Run & Results</div>
+                    </div>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Workflow Configuration</h1>
+                    <p class="page-subtitle">Your automated lead generation pipeline</p>
+                </div>
+                
+                <div class="workflow-canvas">
+                    <div class="workflow-flow">
+                        <div class="workflow-node active">
+                            <h4>🔍 Apollo Search</h4>
+                            <p class="text-sm text-gray-600">Find leads matching criteria</p>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-node active">
+                            <h4>🎯 AmpleLeads Enrich</h4>
+                            <p class="text-sm text-gray-600">Verify & enrich contact data</p>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-node active">
+                            <h4>🧠 AI Scoring</h4>
+                            <p class="text-sm text-gray-600">Score lead quality</p>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-node active">
+                            <h4>📧 Email Campaign</h4>
+                            <p class="text-sm text-gray-600">Send personalized emails</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Criteria</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label class="form-label">Company Size</label>
+                                <select class="form-input">
+                                    <option>50-200 employees</option>
+                                    <option>200-1000 employees</option>
+                                    <option>1000+ employees</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Industry</label>
+                                <select class="form-input">
+                                    <option>Technology</option>
+                                    <option>Healthcare</option>
+                                    <option>Finance</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Location</label>
+                                <select class="form-input">
+                                    <option>United States</option>
+                                    <option>Europe</option>
+                                    <option>Global</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-success" onclick="runWorkflow()">Run Workflow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results Page -->
+            <div id="resultsPage" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Lead Generation Results</h1>
+                    <p class="page-subtitle">1,247 qualified leads found • Last run: 2 hours ago</p>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Global Growth Insights</h3>
+                        <div>
+                            <button class="btn btn-secondary">Export CSV</button>
+                            <button class="btn btn-primary" style="margin-left: 0.5rem;">Send Campaign</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-filters">
+                        <div class="filter-tag">
+                            ICP Score: 85%+ <span onclick="removeFilter(this)" style="cursor: pointer;">×</span>
+                        </div>
+                        <div class="filter-tag">
+                            Company Size: 50-500 <span onclick="removeFilter(this)" style="cursor: pointer;">×</span>
+                        </div>
+                        <div class="filter-tag">
+                            Tech Stack: React <span onclick="removeFilter(this)" style="cursor: pointer;">×</span>
+                        </div>
+                        <div class="filter-tag">
+                            Location: US <span onclick="removeFilter(this)" style="cursor: pointer;">×</span>
+                        </div>
+                    </div>
+                    
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>ICP Score</th>
+                                <th>Contact</th>
+                                <th>Location</th>
+                                <th>Size</th>
+                                <th>Tech Stack</th>
+                                <th>Industry</th>
+                                <th>Status</th>
+                                <th>Website</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div class="company-logo">C</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Calendly</div>
+                                            <div class="text-sm text-gray-600">calendly.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="score-bar">
+                                            <div class="score-fill" style="width: 92%;"></div>
+                                        </div>
+                                        <span class="text-sm">92%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Sarah Johnson</div>
+                                        <div class="text-sm text-gray-600">CTO</div>
+                                        <div class="text-sm text-gray-600">sarah.j@calendly.com</div>
+                                    </div>
+                                </td>
+                                <td>Atlanta, GA</td>
+                                <td>250-500</td>
+                                <td>React, Node.js</td>
+                                <td>SaaS</td>
+                                <td><span class="status-badge status-verified">Verified</span></td>
+                                <td><a href="#" style="color: #4299e1;">gogoair.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div class="company-logo">C</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Clari</div>
+                                            <div class="text-sm text-gray-600">clari.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="score-bar">
+                                            <div class="score-fill" style="width: 95%;"></div>
+                                        </div>
+                                        <span class="text-sm">95%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">David Rodriguez</div>
+                                        <div class="text-sm text-gray-600">Head of Product</div>
+                                        <div class="text-sm text-gray-600">d.rodriguez@clari.com</div>
+                                    </div>
+                                </td>
+                                <td>Sunnyvale, CA</td>
+                                <td>100-250</td>
+                                <td>React, Python</td>
+                                <td>Enterprise</td>
+                                <td><span class="status-badge status-verified">Verified</span></td>
+                                <td><a href="#" style="color: #4299e1;">clari.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div class="company-logo">H</div>
+                                        <div>
+                                            <div style="font-weight: 600;">HubSpot</div>
+                                            <div class="text-sm text-gray-600">hubspot.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="score-bar">
+                                            <div class="score-fill" style="width: 89%;"></div>
+                                        </div>
+                                        <span class="text-sm">89%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Lisa Thompson</div>
+                                        <div class="text-sm text-gray-600">VP Marketing</div>
+                                        <div class="text-sm text-gray-600">l.thompson@hubspot.com</div>
+                                    </div>
+                                </td>
+                                <td>San Francisco, CA</td>
+                                <td>1000+</td>
+                                <td>React, Java</td>
+                                <td>Marketing</td>
+                                <td><span class="status-badge status-verified">Verified</span></td>
+                                <td><a href="#" style="color: #4299e1;">hubspot.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div class="company-logo">A</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Amazon</div>
+                                            <div class="text-sm text-gray-600">amazon.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="score-bar">
+                                            <div class="score-fill" style="width: 87%;"></div>
+                                        </div>
+                                        <span class="text-sm">87%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Alex Kim</div>
+                                        <div class="text-sm text-gray-600">Senior Director</div>
+                                        <div class="text-sm text-gray-600">a.kim@amazon.com</div>
+                                    </div>
+                                </td>
+                                <td>Seattle, WA</td>
+                                <td>10000+</td>
+                                <td>AWS, Java</td>
+                                <td>E-commerce</td>
+                                <td><span class="status-badge status-verified">Verified</span></td>
+                                <td><a href="#" style="color: #4299e1;">amazon.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div class="company-logo">S</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Stripe</div>
+                                            <div class="text-sm text-gray-600">stripe.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="score-bar">
+                                            <div class="score-fill" style="width: 94%;"></div>
+                                        </div>
+                                        <span class="text-sm">94%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Emma Wilson</div>
+                                        <div class="text-sm text-gray-600">VP Product</div>
+                                        <div class="text-sm text-gray-600">e.wilson@stripe.com</div>
+                                    </div>
+                                </td>
+                                <td>San Francisco, CA</td>
+                                <td>1000-5000</td>
+                                <td>React, Ruby</td>
+                                <td>Fintech</td>
+                                <td><span class="status-badge status-verified">Verified</span></td>
+                                <td><a href="#" style="color: #4299e1;">stripe.com</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div style="padding: 1rem 1.5rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: between; align-items: center; background: #f7fafc;">
+                        <div class="text-sm text-gray-600">Showing 1-25 of 1,247 qualified leads</div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary">Previous</button>
+                            <button class="btn btn-primary">1</button>
+                            <button class="btn btn-secondary">2</button>
+                            <button class="btn btn-secondary">3</button>
+                            <button class="btn btn-secondary">...</button>
+                            <button class="btn btn-secondary">50</button>
+                            <button class="btn btn-secondary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        function login() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+        }
+
+        // Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId + 'Page').classList.add('active');
+            
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+        }
+
+        // Navigation handlers
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        // Workflow progression
+        function goToIntegrations() {
+            showPage('integrations');
+        }
+
+        function goToWorkflow() {
+            showPage('workflow');
+        }
+
+        function runWorkflow() {
+            // Simulate workflow running
+            alert('Workflow started! Checking Apollo.io for leads matching your criteria...');
+            setTimeout(() => {
+                showPage('results');
+            }, 2000);
+        }
+
+        // Integration selection
+        function selectIntegration(card) {
+            card.classList.toggle('selected');
+        }
+
+        // Filter removal
+        function removeFilter(element) {
+            element.parentElement.remove();
+        }
+
+        // Simulate real-time updates in results
+        function updateScores() {
+            // Only update if we're on the results page
+            const resultsPage = document.getElementById('resultsPage');
+            if (!resultsPage.classList.contains('active')) return;
+            
+            document.querySelectorAll('.score-fill').forEach(fill => {
+                const currentWidth = parseInt(fill.style.width) || 85;
+                const variation = Math.random() * 4 - 2; // -2 to +2%
+                const newWidth = Math.max(70, Math.min(100, currentWidth + variation));
+                fill.style.width = newWidth + '%';
+                const nextEl = fill.nextElementSibling;
+                if (nextEl) {
+                    nextEl.textContent = Math.round(newWidth) + '%';
+                }
+            });
+        }
+
+        // Update scores every 15 seconds to show "live" data
+        setInterval(updateScores, 15000);
+
+        // Add some interaction to the workflow nodes
+        document.querySelectorAll('.workflow-node').forEach(node => {
+            node.addEventListener('click', function() {
+                const title = this.querySelector('h4').textContent;
+                alert(`Configure ${title}\n\nThis would open detailed configuration for this workflow step.`);
+            });
+        });
+
+        // Simulate loading states
+        function simulateLoading() {
+            const buttons = document.querySelectorAll('.btn-primary');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // Skip if it's a navigation button
+                    if (this.onclick) return;
+                    
+                    const originalText = this.textContent;
+                    this.textContent = 'Loading...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.disabled = false;
+                    }, 2000);
+                });
+            });
+        }
+
+        // Initialize
+        simulateLoading();
+    </script>
+</body>
+</html>4299e1;">calendly.com</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div class="company-logo">G</div>
+                                        <div>
+                                            <div style="font-weight: 600;">GoGoAir</div>
+                                            <div class="text-sm text-gray-600">business.gogoair.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="score-bar">
+                                            <div class="score-fill" style="width: 88%;"></div>
+                                        </div>
+                                        <span class="text-sm">88%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Michael Chen</div>
+                                        <div class="text-sm text-gray-600">VP Engineering</div>
+                                        <div class="text-sm text-gray-600">m.chen@gogoair.com</div>
+                                    </div>
+                                </td>
+                                <td>Broomfield, CO</td>
+                                <td>500-1000</td>
+                                <td>Java, AWS</td>
+                                <td>Aviation</td>
+                                <td><span class="status-badge status-verified">Verified</span></td>
+                                <td><a href="#" style="color: #
